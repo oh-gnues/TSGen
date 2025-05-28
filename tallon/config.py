@@ -10,7 +10,7 @@ class ProjectConfig:
 
     # root folders
     root_experiment: Path = Path("experiment")
-    root_result: Path = Path("result")
+    root_results: Path = Path("results")
     smell_guides_dir: Path = Path("smell-guides")
 
     # tool locations
@@ -32,7 +32,7 @@ class ProjectConfig:
 
     @property
     def result_dir(self) -> Path:
-        return self.root_result / self.project_name
+        return self.root_results / self.project_name
 
     @property
     def generated_test_dir(self) -> Path:

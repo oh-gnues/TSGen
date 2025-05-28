@@ -30,7 +30,10 @@ def _prettify_smell(name: str) -> str:
 
 from .config import ProjectConfig
 
-openai.api_key = os.getenv("OPENAI_API_KEY")  # Key는 환경 변수로 전달
+if not os.getenv("OPENAI_API_KEY"):
+    raise ValueError("OPENAI_API_KEY environment variable is required")
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 SYSTEM_PROMPT = textwrap.dedent(
     """

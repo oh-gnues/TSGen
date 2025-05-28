@@ -1,0 +1,880 @@
+Most Important
+* Help
+* EntryView/justification
+* GatherView/sorting
+* Create Properties Page
+
+===============================] 2008-06-02 [===============================
+
+Cannot exit from calorieCount
+
+This is hopefully fixed.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Create Properties Page
+
+You know, just like caloriecount were a *real* application?  Be able to setup
+directories, archiving or whatever.  
+
+In particular, be able to set where the app properties file is, since that is
+causing so much trouble today -_-
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Cannot exit from calorieCount
+
+This happens when you click exit and confirm --- no response.  Try again.
+Still no response.  
+
+I think it is gagging on save properites 
+
+    com.lts.application.Application.storeApplicationProperties(Unknown Source)
+
+Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+        at java.io.FileOutputStream.<init>(Unknown Source)
+        at java.io.FileOutputStream.<init>(Unknown Source)
+        at java.io.PrintWriter.<init>(Unknown Source)
+        at com.lts.application.Application.storeApplicationProperties(Unknown Source)
+        at com.lts.application.Application.shutDown(Unknown Source)
+        at com.lts.application.Application.promptAndQuit(Unknown Source)
+        at com.lts.application.Application.quit(Unknown Source)
+        at com.lts.application.swing.ApplicationContentPanel.quit(Unknown Source)
+        at com.lts.caloriecount.ui.mainframe.MainFrame$7.action(Unknown Source)
+        at com.lts.event.SimpleActionListener.actionPerformed(Unknown Source)
+        at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+        at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+        at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+        at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+        at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+        at java.awt.Component.processMouseEvent(Unknown Source)
+        at javax.swing.JComponent.processMouseEvent(Unknown Source)
+        at java.awt.Component.processEvent(Unknown Source)
+        at java.awt.Container.processEvent(Unknown Source)
+        at java.awt.Component.dispatchEventImpl(Unknown Source)
+        at java.awt.Container.dispatchEventImpl(Unknown Source)
+        at java.awt.Component.dispatchEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+        at java.awt.Container.dispatchEventImpl(Unknown Source)
+        at java.awt.Window.dispatchEventImpl(Unknown Source)
+        at java.awt.Component.dispatchEvent(Unknown Source)
+        at java.awt.EventQueue.dispatchEvent(Unknown Source)
+        at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+        at java.awt.EventDispatchThread.run(Unknown Source)
+
+===============================] 2008-06-01 [===============================
+
+I'm sure that all or at least some of these bugs are not actually fixed, and 
+that the thing will explode the first time I try it, but nil desperandum and 
+whatnot.
+
+Implementations/fixes for the following:
+* budget XML
+* Dayview additional info
+* Startup in record mode
+* GatherView Additional Info
+* Created foods should be selected
+* Added a converter for the new 1.3 format
+
+
+Startup in record mode
+
+This is now "remember if you were in recording mode" rather than always starting 
+in record mode.  Thus if the app was not recording, it does not start up recording.
+
+
+GatherView Additional Info
+
+The requirement to "provide some way to record what has been logged" is a difficult
+one to implement.  A practical alternative is provided by the ability to look at 
+the day view and the gather view at the same time. 
+
+
+===============================] 2008-05-31 [===============================
+
+20080531
+
+Hopefully fixed or implemented the following:
+* DayView/Edit time updates are not displayed
+* GatherView time of gather
+* Remember window sizes
+
+===============================] 2008-05-30 [===============================
+
+GatherView records the wrong entry <fixed?>
+
+Cannot reproduce this.  Hopefully, it was fixed by another fix.
+
+
+GatherView/sorting
+
+After you select a food the count field in the gatherView increases.  At that
+point, if the entry is now higher than the entries "above" it, the incremented
+entry should bubble up.  As it is, the entry stays at the same location.
+
+
+DayView/Edit time updates are not displayed
+
+* Use Gather Now to create a new entry
+* Use the dayview to display the day's entries
+* Double click the new entry
+* Set the time
+* Accept the changes
+* Day view does not show the changes
+
+Note that if you close the dayview and open it again, the changes *do* show up,
+it is just that they do not show up in the display when they happen.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+20080530 build
+
+<fixed>
+DayView/Create Meal/Select food does not work
+
+* Start up CC
+* click on dayview
+* click on create
+* click on "..." to select a food
+* double click on "beans and rice"
+* The following exception appears in the window
+
+Exception in thread "AWT-EventQueue-0" java.lang.ClassCastException: com.lts.caloriecount.data.food.Food cannot be cast to com.lts.caloriecount.ui.foodwin.FoodSelectWindow
+        at com.lts.caloriecount.ui.mealview.MealWindow$2.callback(Unknown Source)
+        at com.lts.event.CallbackListenerHelper.notifyListener(Unknown Source)
+        at com.lts.event.ListenerHelper.fire(Unknown Source)
+        at com.lts.event.ListenerHelper.fire(Unknown Source)
+        at com.lts.caloriecount.ui.foodwin.FoodSelectWindow.tellSuccessListeners(Unknown Source)
+        at com.lts.caloriecount.ui.frequent.JTableSelectPanel.performSelect(Unknown Source)
+        at com.lts.caloriecount.ui.frequent.JTableSelectPanel$4.doubleClick(Unknown Source)
+        at com.lts.swing.SimpleMouseListener.processMouseEvent(Unknown Source)
+        at com.lts.swing.SimpleMouseListener.mousePressed(Unknown Source)
+        at java.awt.AWTEventMulticaster.mousePressed(Unknown Source)
+        at java.awt.Component.processMouseEvent(Unknown Source)
+        at javax.swing.JComponent.processMouseEvent(Unknown Source)
+        at java.awt.Component.processEvent(Unknown Source)
+        at java.awt.Container.processEvent(Unknown Source)
+        at java.awt.Component.dispatchEventImpl(Unknown Source)
+        at java.awt.Container.dispatchEventImpl(Unknown Source)
+        at java.awt.Component.dispatchEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+        at java.awt.Container.dispatchEventImpl(Unknown Source)
+        at java.awt.Window.dispatchEventImpl(Unknown Source)
+        at java.awt.Component.dispatchEvent(Unknown Source)
+        at java.awt.EventQueue.dispatchEvent(Unknown Source)
+        at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+        at java.awt.EventDispatchThread.run(Unknown Source)
+Exception in thread "AWT-EventQueue-0" java.lang.ClassCastException: com.lts.caloriecount.data.food.Food cannot be cast to com.lts.caloriecount.ui.foodwin.FoodSelectWindow
+        at com.lts.caloriecount.ui.mealview.MealWindow$2.callback(Unknown Source)
+        at com.lts.event.CallbackListenerHelper.notifyListener(Unknown Source)
+        at com.lts.event.ListenerHelper.fire(Unknown Source)
+        at com.lts.event.ListenerHelper.fire(Unknown Source)
+        at com.lts.caloriecount.ui.foodwin.FoodSelectWindow.tellSuccessListeners(Unknown Source)
+        at com.lts.caloriecount.ui.frequent.JTableSelectPanel.performSelect(Unknown Source)
+        at com.lts.caloriecount.ui.frequent.JTableSelectPanel$4.doubleClick(Unknown Source)
+        at com.lts.swing.SimpleMouseListener.processMouseEvent(Unknown Source)
+        at com.lts.swing.SimpleMouseListener.mousePressed(Unknown Source)
+        at java.awt.AWTEventMulticaster.mousePressed(Unknown Source)
+        at java.awt.Component.processMouseEvent(Unknown Source)
+        at javax.swing.JComponent.processMouseEvent(Unknown Source)
+        at java.awt.Component.processEvent(Unknown Source)
+        at java.awt.Container.processEvent(Unknown Source)
+        at java.awt.Component.dispatchEventImpl(Unknown Source)
+        at java.awt.Container.dispatchEventImpl(Unknown Source)
+        at java.awt.Component.dispatchEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+        at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+        at java.awt.Container.dispatchEventImpl(Unknown Source)
+        at java.awt.Window.dispatchEventImpl(Unknown Source)
+        at java.awt.Component.dispatchEvent(Unknown Source)
+        at java.awt.EventQueue.dispatchEvent(Unknown Source)
+        at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+        at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+        at java.awt.EventDispatchThread.run(Unknown Source)
+
+
+
+
+GatherView records the wrong entry
+
+* Grab the datafile 
+
+    C:\files\caloriecount\20080530\caloriecount.xml
+
+* Fire up CC and click on "gather now"
+* double-click on "beans and rice" 
+* take a look at the dayview: it shows apples
+
+===============================] 2008-05-29 [===============================
+
+GatherView cannot select other food
+
+Click gather new, select other, then select peanuts.  The dayview and the data
+file are not updated with the new entry.
+
+This was fixed, and should be in build 20080530
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+GatherView time of gather
+
+The time is always the same, regardless of whether the gather is triggered by
+time or by clicking the gather now button.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Help
+
+That is online help for calorie count and generally documentation.  THIS IS
+CRITICAL.  It is barely allowable to release the system without help, since
+nobody is going to be able to use it!
+
+Here are the priorities:
+* Getting Started/Quickstart
+* Getting Started
+* Descriptions of each window
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+The line
+
+The ------ line that lists bugs denotes that entries "below the line" should
+NOT be addressed until ALL the entries "above the line" are completed.
+
+The reason is to avoid never being able to release the program.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+EntryView/justification
+
+This builds on the notion of remembering window sizes.  If that is not
+implemented, this will not work.  
+
+The "amount" field in the entry field should either be left or
+center-justified.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+REMEMBER WINDOW SIZES!
+
+This is actually pretty annoying, esp with the gather view.
+
+
+===============================] 2008-05-28 [===============================
+
+build 20080529
+
+Fixes the following:
+* Use listeners for updates to the MainFrame
+* MainFrame layout
+* Adjustments
+
+Vague declaration of victory
+
+Going to give adjustments a try for a few days and see if they appear to 
+work...mostly.
+
+Changed the MainFrame so that it listens for changes to the Entry list 
+(meals and adjustments) and updates itself when changes occur.  Before it 
+would periodically update.
+
+Changed the way that gathers work so that the GatherView creates a meal 
+directly, instead of sending out a GatherEvent and letting the listener 
+create it.
+
+GatherView time of gather
+
+The gather view now DISPLAYS a date and time, but does not actually do 
+anything with those values (it is supposed to be editable).
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Created the 20080528 build which hopefully fixes 
+* The app does not record meals
+* The old XML does not work
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+MainFrame layout
+
+The MainFrame shows info in the following order:
+
+	Budgeted
+	Total
+	Surplus/Def
+	Value
+	
+It would be better if it showed the info in the following order
+
+	Budgeted
+	Total so far
+	Balance
+	Surplus/Def
+	
+
+===============================] 2008-05-27 [===============================
+
+Use listeners for updates to the MainFrame
+
+In addition to having a thread that periodically updates the mainframe, making
+the mainframe a listener to the entry list would mean that results from a
+gather would make it onto that window in a more timely manner.  As it is, you
+have to wait around for a little bit for the main frame to update.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+The app does not record meals
+
+For whatever reason, the entries section in the datafile is always empty.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+The old XML does not work
+
+The XML from version 0.1 does not completely interoperate with version 0.2
+Specifically, the meals and frequent foods do not show up in 0.2 when the file version was pre 1.0
+
+
+budget XML
+* change the start tag to "start-of-day" or the like
+* change the end tag to "end-of-day"
+* give the start & end tags a value like 06:00:00 instead of with the sub-tags.
+* change the period to have the same format as the start & end tags.
+
+Here is what this currently looks like:
+
+    <budget>
+        <end>
+            <hour>22</hour>
+            <minute>0</minute>
+        </end>
+        <period>1800000</period>
+        <start>
+            <hour>6</hour>
+            <minute>0</minute>
+        </start>
+        <caloriesPerHour>100.0</caloriesPerHour>
+    </budget>
+
+This would work a lot better with the following format:
+
+    <budget>
+        <start-of-day>06:00:00</start-of-day>
+        <end-of-day>22:00:00</end-of-day>
+	<period>00:30:00</period>
+        <caloriesPerHour>100.0</caloriesPerHour>
+    </budget>
+
+
+
+===============================] 2008-05-26 [===============================
+
+Created the 0.2 release, code named "Imperious Ant." :-)
+
+The new version features adjustments, and a vastly simplified XML file format 
+for saves and restores.  What's more, the new version will actually convert the 
+old version of XML.
+
+Here are the bugs/features that are fixed/implemented:
+* adjustments
+* export
+
+The release also introduces file versions to the system.  The file now has a 
+line of the form:
+
+	<calorieCount date="2008-05-27@06:35:58.843" version="1.2">
+	
+The version is used to figure out how to convert the file from whatever version 
+it was to something that the program can use directly.
+
+===============================] 2008-05-20 [===============================
+
+GatherView time of gather
+
+If the GatherView somehow decides on using a different date than the current
+time, there is no way of changing it (at least from the gather view).  Need to
+at least display what time its going to record.  Should really allow the user
+to select the gather time.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Fixed the exception with "select other"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+GatherView: Exception when you select "other"
+* From the MainFrame, click the "gather now" button
+* From the GatherView, click the "other" button
+* Select something from the resulting FoodListView
+* Exception results
+
+java.lang.ClassCastException: javax.swing.JFrame cannot be cast to javax.swing.JDialog
+	at com.lts.swing.LTSPanel.getDialog(LTSPanel.java:462)
+	at com.lts.caloriecount.ui.frequent.JTableSelectPanel.selectEntry(JTableSelectPanel.java:248)
+	at com.lts.caloriecount.ui.gatherwin.GatherWindow.selectOtherEntry(GatherWindow.java:186)
+	at com.lts.caloriecount.ui.gatherwin.GatherWindow$2.action(GatherWindow.java:104)
+	at com.lts.caloriecount.swing.ApplicationAction.actionPerformed(ApplicationAction.java:17)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+java.lang.ClassCastException: javax.swing.JFrame cannot be cast to javax.swing.JDialog
+	at com.lts.swing.LTSPanel.getDialog(LTSPanel.java:462)
+	at com.lts.caloriecount.ui.frequent.JTableSelectPanel.selectEntry(JTableSelectPanel.java:248)
+	at com.lts.caloriecount.ui.gatherwin.GatherWindow.selectOtherEntry(GatherWindow.java:186)
+	at com.lts.caloriecount.ui.gatherwin.GatherWindow$2.action(GatherWindow.java:104)
+	at com.lts.caloriecount.swing.ApplicationAction.actionPerformed(ApplicationAction.java:17)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Export
+
+* At this point, export seems to work reasonably well.  
+* Next step is to get import working.  
+* Final step is to replace File save/restore --- simply replace the methods 
+  called.
+
+
+Adjustments
+
+Once import/export is working, can then move on to implementing adjustments.
+
+===============================] 2008-05-16 [===============================
+
+Adjustments
+
+This is a major change to calorie count since it introduces a new type of 
+data: the adjustment.  They most closely resemble a meal, in that they have 
+a time associated with them.  However, they have no food associated with 
+them instead they have a value in calories.  That value can be positive or 
+negative so as to increase or decrease the balance.
+
+The introduction of Adjustments requires that the MealList undergo some 
+radical changes.  In particular, the following is required:
+
+* Migration/translation of data
+* Introduction of TimeEntries
+* Replacement of the MealList with the TimeEntryList
+* Modification of the DayView to use the TimeEntryList instead of the MealList.
+* Modification of the DayView to use the appropriate editor for each Entry
+
+
+Migration/translation of data
+
+The practice of "disowning" data is simply not acceptable.  When the 
+underlying data changes, the system must provide some sort of import or export 
+or translation mechanism so that the user does not have to re-enter their 
+data.
+
+Some possibilities for this include...
+* Export
+* Import
+* "one-time" translation
+
+While some facility is needed, it should not detract from the overall reason 
+for creating this program --- that is, this facility will not be extensive.
+
+For that reason, a rather simple mechanism is suggested that is a variation 
+on the "one-time" translation approach: the translation chain.
+
+A new interface/class shall be created whose fundamental unit is a class that 
+can deserialize data in it's format and translate data from a version 
+that immediately proceeded it.  
+
+For example, if you created a translator that applied to version 1.1, it would
+know how to deserialize 1.1 data directly.  It would also know how to take 
+objects in the immediately proceeding version, assume 1.0 for this example,
+and translate them into the 1.1 version.
+
+The idea is that these translators can be chained to create a mechanism for 
+converting data from all previous versions into the current version.
+
+Determining whether this is a do-able approach will be the first step to the 
+change.  This must not take a lot of time --- if it does then simple data 
+abandonment must be used.
+
+
+TimeEntries
+
+A TimeEntry is an abstraction of a Meal so as to allow for the existence 
+of Adjustments.  TimeEntries have a time associated with them that marks 
+when they occur, and a value that represents the number of calories that 
+represent the number of calories consumed (in the case of Meals) or the 
+number added or removed (in the case of Adjustments).
+
+
+Replacement of the MealList with the TimeEntryList
+
+Because the elements for a day can now include Adjustment objects as well
+as Meal objects, the MealList *must* be replaced.  In particular, 
+serialization and deserialization *must* know about the possibilities and 
+deal with them accordingly.
+
+
+The DayView/RowModel
+
+TimeEntries represent a particular challenge with respect to the DayView in 
+that they require some method of ascertaining the number of columns and 
+obtaining the data for the column.
+
+The current MealRowModel must be replaced with a TimeEntryRowModel.
+
+
+DayView/Edit
+
+Since there are now two distinct different sub-types to deal with, different
+editors are required for Adjustments than for Meals.  
+
+One approach is to put the knowledge of how to edit entries into a wrapper 
+type for the TimeEntries.  That is, a DisplayTimeEntry.  An instance of 
+that class would be created for each entry in the TimeEntryList, and it 
+would be that list that is handled by the DayView, *not* a list of Meals or 
+TimeEntries.
+
+When the user selects to edit an entry, the DisplayTimeEntry would "know" the 
+sort of data it was dealing with and invoke the editor appropriate to the 
+element.
+
+
+Another possibility is to use a list of TimeEntry objects, and then use 
+some sort of factory method that "knows" which editor to use for each 
+sub-type.
+
+The problem with this solution is that you know have a distinctly non-OO 
+approach to dealing with a common OO problem.  The nice aspect is that no 
+wrapper class is required.
+
+The introduction of adjustments will require many changes.  In particular 
+the following areas will have to change:
+
+DayView
+	Adjustment Edit
+
+EntryList
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Fixed the following
+* Dayview>Edit does not record times
+* Field updating in MainFrame
+* Exception when selecting other from gatherview
+
+Dayview>Edit does not record times
+	updates are now reflected in the dayview
+
+Field updating in MainFrame
+	There are now fields for new values that are independent of the ones that 
+get updated
+
+Exception when selecting other from gatherview
+	Fixed (hopefully)
+	
+===============================] 2008-05-15 [===============================
+
+Fixed the following:
+!! Gather dialog is popping up
+
+
+===============================] 2008-05-14 [===============================
+
+Gather dialog is popping up
+
+Instead of flashing the task/status bar, the gatherview is popping up.
+
+	synchronized public void performGather()
+	{
+		if (null == myFrame)
+			myFrame = new JFrame();
+		
+==>		CalorieCount.getData().getFrequentFoods().sort();
+==>		GatherWindow frame;
+==>		frame = GatherWindow.createInstance(myFrame);
+==>		FrequentFood freq = frame.selectFood();
+==>		if (null != freq)
+==>		{
+==>			CalorieCount.getData().getMeals().createMeal(freq.getFood());
+==>		}
+	}
+	
+
+
+Dayview>Edit does not record times
+
+1) Create an entry in CC via "gather now"
+2) Bring up the dayView
+3) Bring up the edit for a meal
+4) Set the time to a different value
+5) The dayview shows the old time
+
+
+==================] 2008-05-08 [==================
+
+Get this exception via the following procedure:
+1) From the mainframe, select "gather now"
+2) From the resulting gather view, select "other"
+3) From the resulting food list, double click a food
+
+
+java.lang.ClassCastException: javax.swing.JFrame cannot be cast to javax.swing.JDialog
+	at com.lts.swing.LTSPanel.getDialog(LTSPanel.java:462)
+	at com.lts.caloriecount.ui.frequent.JTableSelectPanel.selectEntry(JTableSelectPanel.java:248)
+	at com.lts.caloriecount.ui.gatherwin.GatherWindow.selectOtherEntry(GatherWindow.java:188)
+	at com.lts.caloriecount.ui.gatherwin.GatherWindow$2.action(GatherWindow.java:106)
+	at com.lts.caloriecount.swing.ApplicationAction.actionPerformed(ApplicationAction.java:17)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Remember window sizes
+
+Things like the food list should "remember" the size of the window instead of
+forcing the user to resize it.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Dayview additional info
+
+Would be useful to show the total (balance) for the day.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+GatherView Additional Info
+
+That is, the gather view should show the following:
+* Balance
+* Calories for each frequent entry
+
+Need some way of figuring out whether a particular meal has been "logged" or
+not.  One of the problems with the gather view is that you may not remember
+whether or not you have done so.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Field updating in MainFrame
+
+This refers to the fact that, in order to keep fields like "next gather time"
+up to date, the MainFrame will, from time to time, call MainFrame.refresh.  The
+problem with this is that refresh will overwrite anything that the user has
+entered.  
+
+For example, it can be extremely annoying if you select a gather time and that
+selection is overwritten by the refresh call.
+
+What is probably a better approach is to create a couple of new fields that
+specify the *current* gather period and the next gather time.  Make the new
+fields read-only.  Change the refresh method to only update the read-only
+fields.
+
+This way, the system will not overwrite the user's changes.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Build 20080512, version 0.1, "Angry Krab".
+
+This build should fix the following:
+* Help>About
+* flash the taskbar instead of grabbing focus
+* Day View/Edit
+
+The following appear to have been fixed by previous releases:
+
+<*> Dayview deletes do not show up.
+<*> Dayview edits do not show up
+<*> Dayview should be sorted
+<*> Default buttons on edit meal
+<*> Created entries seem to end up using "grapefruit"
+<*> List of foods is not sorted by name
+
+==================] 2008-05-08 [==================
+
+Adjustments
+
+App needs to be able to simply set the balance to an arbitrary value --- this
+would create an entry called an adjustment in that it has no corresponding food
+associated with it and the calories in the adjustment can vary as the situation
+requires.
+
+==================] 2008-05-07 [==================
+
+Help>About
+
+You need *some* way of figuring out which version of calorie count you are
+using and when it was built.  This is to figure out which bug fixes may or may
+not be in the release.
+
+
+Day View/Edit
+
+This should be working now.  Before it was not using SortedListProxy in the
+food selection window.  Now it is and appears to be working.
+
+
+==================] 2008-05-06 [==================
+
+Day View/Edit
+
+At one point, I created an entry for a cliff bar and it ended up with chai.  I
+tried to use edit to change it to a cliff bar, but it would not select that.
+Probably something wrong with the mapping.
+
+
+Startup in record mode
+
+The app should start up in recording mode, if it was shut down in recording
+mode.
+
+
+flash the taskbar instead of grabbing focus
+
+You are in the middle of typing/working on something when CC jumps up and grabs
+the focus.  This is extremely annoying.
+
+Rather than doing this, it would be better if the app would just use the same
+approach as trillian: flash the message on the task bar or pop up a ballon, but
+let the user continue what they were doing.
+
+===================================================
+
+* Startup in record mode
+
+List of foods is not sorted by name
+1) Click "foods" to bring up the foods list
+2) The list should be sorted by name, it is not.
+
+Created entries seem to end up using "grapefruit"
+
+1) Create a new entry in the foods list.
+2) Click "gather now"
+3) Click other to select a food not in the frequently used list
+4) Select the newly created food
+5) Click the dayview 
+
+The entry for the meal uses grapefruit instead of the newly created food.
+
+
+Dayview deletes do not show up.
+
+If you delete a meal from the dayview, it does not disappear from the dayview
+until you reopen it.
+
+You can *try* to minimize and restore the window, but the thread seems to block and nothing displays in that situation.  Same if you try to resize the window.
+
+
+Dayview edits do not show up
+
+That is, if you edit the time (for example) of a meal & accept it.  It does not
+show up with the new time on the dayview.  Instead, you have to close the
+dayview and reopen in order to see the updated time.  
+
+You can see the update if you resize the window, however.
+
+
+Dayview should be sorted
+
+The entries should be sorted by time of day.
+
+
+Created foods should be selected
+
+If you create a food in response to the gather menu, the newly created food
+should automatically be selected.  If you cancel the create, then it should not
+select anything, and just plop you back at the food selection screen.
+
+
+Default buttons on edit meal
+
+If you hit return on the edit meal dialog, it should act as if you clicked "OK"
+
+
+Double-clicking a meal in the dayview should edit the entry
+
+That is, it should take the entry you clicked on and bring it up in the edit
+meal screen.
+
+

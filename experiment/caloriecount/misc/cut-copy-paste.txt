@@ -1,0 +1,47 @@
+incore = "java.awt.datatransfer.DataFlavor[mimetype=application/x-java-jvm-local-objectref;representationclass=java.io.InputStream]"
+
+====] cut-paste [====
+ExportToClipboardCalled{move}
+GetSourceActionsCalled
+CreateTransferableCalled
+GetTransferDataFlavorsCalled{incore}
+GetTransferDataCalled
+ExportDoneCalled {move}
+ImportDataCalled
+
+====] copy [====
+ExportToClipboardCalled{copy}
+GetSourceActionsCalled
+CreateTransferableCalled
+GetTransferDataFlavorsCalled{incore}
+GetTransferDataCalled
+ExportDoneCalled {copy}
+
+====] paste [====
+ImportDataCalled
+
+====] move [====
+GetSourceActionsCalled
+GetSourceActionsCalled
+GetSourceActionsCalled
+GetSourceActionsCalled
+
+// ExportAsDrag is the key difference between this and a copy-paste or cut-paste
+// operation.  With copy/cut, ExportToClipboard is called.  With drag-move,
+// ExportAsDrag is called.
+ExportAsDragCalled
+
+GetSourceActionsCalled
+CreateTransferableCalled
+GetTransferDataFlavorsCalled{incore}
+
+// the next two calls are repeated as the mouse is moved to the drop position
+GetTransferDataFlavorsCalled{incore}
+CanImportCalled{incore}
+// ...
+
+GetTransferDataFlavorsCalled{incore}
+CanImportCalled{incore}
+ImportDataCalled
+ExportDoneCalled {move}
+

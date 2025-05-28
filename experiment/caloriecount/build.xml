@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Aug 22, 2007 8:03:37 AM                                                        
+
+     CalorieCount    
+     A build file to create the distribution JAR.
+                   
+     cnh                                                                
+     ====================================================================== -->
+<project name="project" default="dist">
+    <description>
+            A build file to create the distribution JAR.
+    </description>
+
+	<property name="JARFILE" value="caloriecount.jar"/>
+	
+	<property name="TEMP" value="temp"/>
+	<property name="BIN" value="bin"/>
+	<property name="SRC" value="src"/>
+	<property name="LIBDIR" value="lib"/>
+	<property name="JDK" value="C:/files/java/jdk1.6.0_06"/>
+	<property name="SHORT_NATIVE_LIB" value="flashmenu.dll"/>
+	<property name="NATIVE_LIB" value="jni/${SHORT_NATIVE_LIB}"/>
+	<property name="STAGING" value="temp/staging"/>
+	<property name="STAGING-DIST" value="temp/dist"/>
+	<property name="PACKAGE" value="caloriecount-0.2.1-win.zip"/>
+	
+	<property name="DIST_DIR" value="dist"/>
+	
+	<property name="DIST_SRC_DIR" value="${TEMP}/src" />
+	
+	<property name="MAN" value="misc/MANIFEST.MF"/>
+	<property name="SRCJAR" value="${TEMP}/src/${JARFILE}"/>
+	
+	
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" depends="dist" />
+
+    <target name="compile" depends="libraries">    	
+    	<mkdir dir="${STAGING}"/>
+    	
+    	<javac nowarn="on" destdir="${STAGING}">
+    		<compilerarg value="-nowarn"/>
+    		<src path="src"/>
+    		<src path="util"/>
+    		<classpath>
+    			<fileset dir="${STAGING}">
+    			</fileset>
+    		</classpath>
+    	</javac>
+
+		<echo 
+			message="copying non-java src files"/>
+    	
+		<copy todir="${STAGING}" overwrite="true">
+			<fileset dir="${SRC}">
+				<exclude name="*.java"/>
+				<exclude name="*.html"/>
+			</fileset>
+		</copy>
+    </target>
+	
+	<target name="copy-binaries">
+		<copy todir="${STAGING}" overwrite="true">
+			<fileset dir="${BIN}"/>
+		</copy>
+	</target>
+	
+	<!-- extract out all the files from the JAR files that this application uses 
+	into ${STAGING} -->
+	
+	<target name="libraries">
+		<mkdir dir="${STAGING}"/>
+		<mkdir dir="${LIBDIR}"/>
+		<unjar dest="${STAGING}">
+			<fileset dir="${LIBDIR}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</unjar>
+	</target>
+	
+	<target name="source">
+		<mkdir dir="${DIST_SRC_DIR}"/>
+		<jar destfile="${SRCJAR}" compress="false">
+			<fileset dir="${SRC}"/>
+			<fileset dir="util"/>
+		</jar>
+	</target>
+	
+	<target name="jar">
+		<jar destfile="${STAGING-DIST}/${JARFILE}" manifest="${MAN}">
+			<fileset dir="${STAGING}"/>
+		</jar>
+	</target>
+		
+	<target name="clean">
+		<delete dir="${TEMP}"/>
+		<delete dir="${BIN}"/>
+		<delete file="${JARFILE}"/>
+		<delete dir="dist"/>
+	</target>
+	
+    <target name="docs">
+    	<mkdir dir="${STAGING-DIST}/docs"/>
+    	<copy todir="${STAGING-DIST}/docs">
+    		<fileset dir="docs"/>
+    	</copy>
+    </target>
+    		
+	<target name="misc">
+		<copy file="${NATIVE_LIB}" todir="${STAGING-DIST}"/> 
+		<copy file="misc/data.xml" todir="${STAGING-DIST}"/>
+		<copy file="misc/caloriecount.bat" todir="${STAGING-DIST}"/>
+	</target>
+		
+	<target name="create-directories">
+		<mkdir dir="${DIST_DIR}"/>
+		<mkdir dir="${STAGING}"/>
+		<mkdir dir="${STAGING-DIST}"/>
+	</target>
+		
+	<target name="build" depends="compile, jar, docs, misc">
+		<description>Create an image of the zip file in the staging area</description>
+	</target>
+	
+	<target name="zip">
+		<description>build the actual distribution zipfile</description>
+		<delete file="dist/${PACKAGE}"/>		
+		<zip basedir="${STAGING-DIST}" destfile="dist/${PACKAGE}"/>		
+	</target>
+	
+	<target name="dist" depends="create-directories, build, zip"/>
+		
+	
+	<target name="rebuild" depends="clean, compile"/>
+	
+	
+	<target name="jni">
+		<exec
+			dir="jni"
+			executable="gcc"	
+		>
+			<arg value="-D_WIN32_WINNT=0x500"/>
+			<arg value="-mno-cygwin"/>
+			<arg value="-I${JDK}/include"/>
+			<arg value="-I${JDK}/include/win32"/>
+			<arg value="-Wl,--add-stdcall-alias"/>
+			<arg value="-shared"/>
+			<arg value="-oflashmenu.dll"/>
+			<arg value="*.c"/>
+			<arg value="${JDK}/lib/jawt.lib"/>
+		</exec>
+		
+		<copy file="jni/flashmenu.dll" todir="lib"/>
+	</target>
+	
+	<target name="redist" depends="clean, dist"/>
+</project>

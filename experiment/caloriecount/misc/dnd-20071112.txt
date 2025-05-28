@@ -1,0 +1,145 @@
+drag/move
+
+GetSourceActionsCalled{08:23:09}
+GetSourceActionsCalled{08:23:09}
+ExportAsDragCalled{08:23:09, move}
+CallStart{08:23:09ExportAsDragCalled}
+GetSourceActionsCalled{08:23:09}
+CreateTransferableCalled{08:23:09}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CallEnd{08:23:09ExportAsDragCalled}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:09, JVM-object}
+CanImportCalled{08:23:09, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+GetTransferDataFlavorsCalled{08:23:10, JVM-object}
+CanImportCalled{08:23:10, JVM-object}
+ImportDataCalled{08:23:10source drop action = copy-or-move, drop action = move, user drop action = move}
+ExportDoneCalled{08:23:10, move}
+
+
+
+cut/paste
+
+ExportToClipboardCalled{08:24:23, move}
+CallStart{08:24:23ExportToClipboardCalled}
+GetSourceActionsCalled{08:24:23}
+CreateTransferableCalled{08:24:23}
+GetTransferDataFlavorsCalled{08:24:23, JVM-object}
+GetTransferDataCalled{08:24:23, JVM-object}
+ExportDoneCalled{08:24:23, move}
+CallEnd{08:24:23ExportToClipboardCalled}
+ImportDataCalled{08:24:25not a drop}
+
+
+copy/paste
+
+ExportToClipboardCalled{08:26:26, copy}
+CallStart{08:26:26ExportToClipboardCalled}
+GetSourceActionsCalled{08:26:26}
+CreateTransferableCalled{08:26:26}
+GetTransferDataFlavorsCalled{08:26:26, JVM-object}
+GetTransferDataCalled{08:26:26, JVM-object}
+ExportDoneCalled{08:26:26, copy}
+CallEnd{08:26:26ExportToClipboardCalled}
+ImportDataCalled{08:26:28not a drop}
+
+

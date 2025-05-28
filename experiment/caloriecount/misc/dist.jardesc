@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="C:/files/opensrc/caloriecount/dist/caloriecount.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/caloriecount/misc/dist.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" manifestLocation="/caloriecount/misc/MANIFEST.MF" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="false" exportJavaFiles="true" exportOutputFolder="true">
+        <folder path="/caloriecount/dist"/>
+        <folder path="/caloriecount/help"/>
+        <javaElement handleIdentifier="=pest"/>
+        <file path="/caloriecount/todo"/>
+        <javaElement handleIdentifier="=caloriecount/src"/>
+        <javaElement handleIdentifier="=util"/>
+        <folder path="/caloriecount/temp"/>
+        <folder path="/caloriecount/lib"/>
+        <file path="/caloriecount/hs_err_pid2828.log"/>
+        <javaElement handleIdentifier="=caloriecount/expjar"/>
+        <folder path="/caloriecount/misc"/>
+    </selectedElements>
+</jardesc>

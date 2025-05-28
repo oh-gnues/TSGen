@@ -1,0 +1,404 @@
+<html>
+	<head>
+		<title>CalorieCount Quickstart</title>
+
+<style>
+<!--
+body {
+	margin:0;
+	padding:0;
+	font-size: 12pt;
+	text-align: left;
+	color:#000;
+	line-height:1.3em;
+}
+-->
+</style>
+	</head>
+
+<body>
+
+<div style="margin: 20px; width: 750px;">
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+CalorieCount
+</div> 
+
+<a href="http://sourceforge.net/projects/caloriecount">
+	<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=174949&type=2"
+	width="125" height="37" border="0" alt="SourceForge.net Logo" /> 
+</a>	
+
+<p style="">
+CalorieCount is a tool that helps in dieting and weight loss by keeping track of what you eat.  The
+program periodically asks you what you've eaten, and then records that information in a "food diary"
+or a "food log." Keeping such info is one of the basic tools of dieting and is surprisingly helpful
+to the author.  
+</P>
+
+<P>
+This document is intended for the Windows environment.  CalorieCount will run on linux, but it will
+complain about not being able to find the flashmenu native library.  
+</p>
+
+<p style="">
+To use CalorieCount, follow these steps:
+</p>
+<ul>
+	<li><A href="#jre">Install a JRE</A></li>
+	<li><A href="#download">Download CalorieCount</A></LI>
+	<li><A href="#start_app">Start CalorieCount</A></LI>
+	<li><A href="#save_data">Create a CalorieCount file</A></LI>
+	<li><A href="#set_budget">Set a budget</A></li>
+	<li><A href="#set_interval">Select a question interval</A></li>
+	<li><A href="#click_record">Click record</A></li>
+	<li><A href="#respond">Respond to CC's questions</A></li>
+	<li><A href="#food_list">Creating new Foods</A></li>
+	<li><A href="#edit_food">The Edit Food Dialog</A></li>
+	<LI><A href="#general_use">Responding to Subsequent Questions</A></LI>
+	<LI><A href="#day_view">The Day View</A></LI>
+	<LI><A href="#conclusion">Where to go from Here</A></LI>
+</ul>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="jre">
+	Install a JRE
+</A>
+</div>
+
+<p style="">
+For the time being, I would not recommend using this application for those who are not familiar with
+things like JREs.  You can download a JRE from 
+<A href="java.sun.com">java.sun.com</a>
+</P>
+
+<p style="">
+The recommended JRE for Release 0.2 of CalorieCount is 1.6.0_06.  It may work with other editions,
+but your best bet is to use the recommended version.
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="download">
+	Download CalorieCount
+</A>
+</div>
+
+<p>
+You can download CalorieCount from 
+<A href="http://sourceforge.net/project/showfiles.php?group_id=228081">
+	it's home on SourceForge.
+</A>
+
+The main site for the application is at 
+<A href="http://caloriecount.sourceforge.net">
+	caloriecount.sourceforge.net
+</A>
+where you can get the latest news, fixes for the application.
+</P>
+
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="start_app">
+	Start CalorieCount
+</A>
+</div>
+
+<P>
+You can run CalorieCount via any of the following:
+<UL>
+	<LI>java -jar caloriecount.jar from the command line</LI>
+	<LI>cc.bat from the command line for from a file browser</LI>
+	<LI>double-clicking on the jar file (if you have the file association)</LI>
+</UL>
+</P>
+
+<P>
+You should see the following window:
+</P>
+
+<P>
+<img src="images/getting_started/01_main_frame.jpg"/>
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+
+<A name="save_data">
+	Create a CalorieCount File
+</A>
+</div>
+
+<P>
+<img src="images/getting_started/main_frame_save_as.jpg"/>
+</P>
+
+<P>
+Before doing anything else, select "File&gt;Save As..." or "File&gt;Save" from the menu bar on the
+main window.  The file name and extension do not matter to CalorieCount, so choose any file name you
+like.
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+
+<A name="save_data">
+	Set a Budget
+</A>
+</div>
+
+
+<P>
+From the main window (called the "MainFrame"), click on the budget button:
+</P>
+
+<P>
+<img src="images/getting_started/02_click_budget.jpg"/>
+</P>
+
+<P>
+This should bring up the budget window:
+</P>
+
+<P>
+<img src="images/getting_started/budget_window_01.jpg"/>
+</P>
+
+<P>
+A budget in CalorieCount is a goal for the number of calories you want to stay below over the course
+of a day.  The various fields on this screen tell CalorieCount what your goal is.
+</P>
+
+<P>
+The Calories per hour field is the number of calories that should be added to the balance per hour.
+"Day starts at" tells CalorieCount when it should start adding calories to the balance, while "Day
+ends at" tells it when to stop.  
+</P>
+
+<P>
+Click OK when you have entered your values and are ready for the next step.
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="set_interval">
+	Select a Question Interval
+</A>
+</div>
+
+<P>
+Calorie count works by periodically asking you what you've eaten.  The period of time between
+questions is configured on the MainFrame from the "New Cycle Time" field.
+</P>
+
+<P>
+<img src="images/getting_started/main_frame_interval.jpg"/>
+</P>
+
+<P>
+Select a time period from the drop-down.  CalorieCount only supports certain time intervals (those
+in the drop-down), because the application will round to the closest interval.  
+</P>
+
+<P>
+For example, if you set the interval to 15 minutes and you start recording at 1:20pm, CalorieCount
+will ask you a question at 1:30.  It will ask questions at 15, 30, 45 and at the start of the hour,
+given an interval of 15min.
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="click_record">
+	Click the Record Button
+</A>
+</div>
+
+<P>
+<img src="images/getting_started/main_frame_record_button.jpg"/>
+</P>
+
+<P>
+This will tell CalorieCount to start gathering data.  Note the following when you click record:
+</P>
+
+<UL>
+	<LI>The record button changes to read "Update"</LI>
+	<LI>The current cycle time changes to the value in "new cycle time"</LI>
+	<LI>The "next question at" field changes to the time of the next question.</LI>
+</UL>
+
+<P>
+<img src="images/getting_started/main_frame_recording.jpg"/>
+</P>
+
+<P>
+Changing the "new cycle time" field and clicking on "update" will cause these fields to change to
+reflect the value in "new cycle time."
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="respond">
+	Respond to CC's Questions
+</A>
+</div>
+
+<P>
+Once you are in recording mode, CalorieCount will periodically "poll" you to see if you have eaten
+anything or not.  The window that does this:
+</P>
+
+<P>
+<img src="images/getting_started/gather_view_other.jpg"/>
+</P>
+
+<P>
+When you first start using CalorieCount, this list will be empty.  Click the "other" button to
+choose or create a new food for the database.
+</P>
+
+<P>
+This window displays a list of your most frequently selected foods.  The first time you start
+CalorieCount, however, this window will not contain any values.
+</P>
+
+<P>
+The buttons have the following functions:
+</P>
+<UL>
+	<LI>"Select" creates an entry for the food highlighted in the table.</LI>
+	<LI>"Other" allows you to select something not listed.</LI>
+	<LI>"Skip" tells CalorieCount that you did not eat anything during the specified interval.</LI>
+	<LI>"Stop" tells CalorieCount to stop bothering you --- CalorieCount stops recording.</LI>
+</UL>
+
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="food_list">
+	Create Food Entries
+</A>
+</div>
+
+<P>
+<img src="images/getting_started/food_list_create.jpg"/>
+</P>
+
+<P>
+This displays the foods that CalorieCount "knows" about.  That is, these are foods that the system
+is able to record.  The first time you run CalorieCount, the database will be empty, so you will
+need to create entries.  From this window, select the "Create" button.
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="edit_food">
+	The Edit Food Window
+</A>
+</div>
+
+<P>
+<img src="images/getting_started/edit_food_empty.jpg"/>
+</P>
+
+<P>
+This window allows you to edit the details about a particular food.  Fill in the fields and click on
+the OK button.  For example:
+</P>
+
+<P>
+<img src="images/getting_started/edit_food_rocks.jpg"/>
+</P>
+
+<P>
+Once you do this, the select windows should close and the Main Window should update some of its
+fields:
+</P>
+
+<P>
+<img src="images/getting_started/main_frame_field_updates.jpg"/>
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="general_use">
+	Responding to Subsequent Questions
+</A>
+</div>
+
+<P>
+Once you start using CalorieCount you should see that the list of foods to select from changes.  For
+example:
+</P>
+
+<P>
+<img src="images/getting_started/gather_view_with_entries.jpg"/>
+</P>
+
+<P>
+Hopefully you have better eating habits than I do, but the idea is the same :-)
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="day_view">
+	The Day View
+</A>
+</div>
+
+<P>
+Once you have some entries for the current day, you can view them with the Day View.  From the main
+window, click on the "day view" button:
+</P>
+
+<P>
+<img src="images/getting_started/main_frame_day_view.jpg"/>
+</P>
+
+<P>
+You should see a window like this:
+</P>
+
+<P>
+<img src="images/getting_started/day_view.jpg"/>
+</P>
+
+<P>
+From here, you can create, delete or edit entries from the day view.  For example:
+</P>
+
+<P>
+<img src="images/getting_started/edit_meal.jpg"/>
+</P>
+
+<div style="font-weight: bold; font-size: 18pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="conclusion">
+	Where to go from Here
+</A>
+</div>
+
+<P>
+There are liable to be many updates to CalorieCount, assuming people use it.  The main site for the
+program is on sourceforge at <A href="http://caloriecount.sourceforge.net">caloriecount.sourceforge.net</A> 
+or <A href="http://sourceforge.net/projects/caloriecount/">sourceforge.net/projects/caloriecount</A>
+From there you can get the latest release, log bugs, and generally find out what is new and exciting
+in the world of CalorieCount.
+</P>
+
+<P>
+Good luck and have fun!
+</P>
+
+<div style="font-weight: normal; font-size: 6pt; color: rgb(0, 0, 0); font-family:
+	arial,helvetica,sans-serif; text-align: center;">
+<A name="conclusion">
+	Avoid gnomez
+</A>
+</div>
+
+</body>
+</html>

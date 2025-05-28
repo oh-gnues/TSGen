@@ -1,0 +1,341 @@
+<H2>Summary</H2>
+<UL>
+	<LI><A href="#quick">Quick Start</A></LI>
+	<LI><A href="#setup">Enabling Drag and Drop</A></LI>
+	<LI><A href="#copy">Copy to Clipboard</A></LI>
+	<LI><A href="#cut">Cut to Clipboard</A></LI>
+	<LI><A href="#paste">Paste from Clipboard</A></LI>
+	<LI><A href="#drag-move">Draging and Dropping Data</A></LI>
+</UL>
+
+<H2>
+	<A name="quick">
+		Quick Start
+	</A>
+</H2>
+This section contains simple steps and examples to get Drag and Drop up and
+running.
+
+<P>
+<UL>
+	<LI>
+		<A href="#quick-handler">Subclass TransferHandlerAdaptor</A>
+	</LI>
+	<LI>
+		As appropriate, override...
+		<UL>
+			<LI><A href="#quick-handler-copy">copy</A></LI>
+			<LI><A href="#quick-handler-cut">cut</A></LI>
+			<LI><A href="#quick-handler-paste">paste</A></LI>
+			<LI><A href="#quick-handler-move">move</A></LI>
+		</UL>
+	</LI>
+
+	<LI>
+		<A href="#quick-transferable">(Optional) Subclass LTSTransferable</A>
+	</LI>
+</UL>
+
+<H3><A name="quick-handler">Subclass TransferHandlerAdaptor</A></H3>
+This class defines a default version of all the required method.  You can also 
+subclass AbstractTransferHandler in order to get the required methods.
+<CODE>
+<PRE>
+	public class MyTransferHandler extends TransferHandlerAdaptor
+	{
+		...
+	}
+</PRE>
+</CODE>
+
+<H3><A name="quick-handler-copy">define copy</A></H3>
+If you want to be able to copy to the clipboard, then define this method.  Here 
+is an example from JTableTransferHandler:
+
+<CODE>
+<PRE>
+	public Object copy(JComponent component)
+	{
+	}
+</PRE>
+</CODE>
+
+<H3><A name="quick-handler-cut">define cut</A></H3>
+<H3><A name="quick-handler-paste">define paste</A></H3>
+<H3><A name="quick-handler-move">define move</A></H3>
+
+<H2>
+<A name="introduction">
+	How Java Drag and Drop Works
+</A>
+</H2>
+To provide an ongoing example, this discussion will some classes defined at the
+end of this document.  The objective is to enable DnD for a JTable that
+contains this data.  In this example, only copying data from within the same
+JVM will be considered --- copying from a Java app to a text editor, for
+example, will not work.
+
+<P>
+Java Drang and Drop (or DnD for short), starts when the user signals that they
+want to cut, copy or drag some data.  Windows, this is CTRL-X, CTRL-C or dragging with the mouse.  Each of these corresponds to a different call:
+<UL>
+	<LI><A href="#java-cut">cut, exportToClipboard(,,MOVE)</A></LI>
+	<LI><A href="#java-copy">copy, exportToClipboard(,,COPY)</A></LI>
+	<LI><A href="#java-drag">drag, exportAsDrag</A></LI>
+</UL>
+</P>
+
+<H3>
+	<A name="java-cut">Cut</A>
+</H3>
+DnD signals this to the transfer handler with the following call:
+<CODE>
+<PRE>
+	public void exportToCliboard(JComponent, Clipboard, TransferHandler.MOVE)
+</PRE>
+</CODE>
+
+<P>
+Cut is distinguished from copy by the third parameter to this method 
+(TransferHandler.MOVE).
+</P>
+
+<P>
+Ignoring the ability to "link" data (as in OLE), there are three basic drag and
+drop scenarios: 
+
+<UL>
+	<LI><A href="#setup">Enabling Drag and Drop</A></LI>
+	<LI><A href="#copy">Copy to Clipboard</A></LI>
+	<LI><A href="#cut">Cut to Clipboard</A></LI>
+	<LI><A href="#paste">Paste from Clipboard</A></LI>
+	<LI><A href="#drag-move">Draging and Dropping Data</A></LI>
+</UL>
+</P>
+
+<P>
+<UL>
+	<LI></LI>
+	<LI></LI>
+	<LI></LI>
+	<LI></LI>
+	<LI></LI>
+</UL>
+</P>
+
+<H3>
+	<A name="setup">
+		Enabling Drag and Drop
+	</A>
+</H3>
+The basic step that needs to be accomplished to enable drag and drop in Java 
+is to call JComponent.setTransferHandler(TransferHandler) for each JComponent 
+that you want DnD support.
+
+<P>
+Some JComponent classes, like JTextField, have DnD support "out of the box" so 
+you literally do not need to do anything to get these classes to support DnD.
+See the Java documentation,
+<A href="http://java.sun.com/docs/books/tutorial/uiswing/misc/dnd.html">
+	How to Use Drag and Drop and Data Transfer,
+</A>
+for details regarding which classes have DnD support, and what that support 
+is.
+</P>
+
+<P>
+Some JComponent subclasses, like JTable, have limited DnD support that requires
+some other method calls to enable whatever support they have.  Once again, 
+see the documentation for details.
+</P>
+
+<P>
+For this example, we need to call JComponent.setTransferHandler(TransferHandler) 
+with an instance of our TransferHandler subclass.  In addition, we need to call
+JTable.setDragEnabled(&lt;true&gt;) to allow dragging to work.
+</P>
+
+<P>
+Here is the code:
+<CODE>
+<PRE>
+	public void setupDragAndDrop(JTable table)
+	{
+		ExampleTransferHandler than = new ExampleTransferHandler();
+		table.setTransferHandler(ethan);
+		table.setDragEnabled(true);
+	}
+</PRE>
+</CODE>
+
+
+<H3>
+	<A name="copy">
+		Copy to Clipboard
+	</A>
+</H3>
+In this scenario, the data is copied from one component to the "clipboard." 
+
+<P>
+Here is an example of the events that make up a copy scenario:
+
+<UL>
+	<LI>The user highlights the data they want to copy</LI>
+	<LI>The user signals copy via control-C</LI>
+	<LI>The system tells the handler to begin an export to the clipboard</LI>
+	<LI>The system queries the handler for allowable actions</LI>
+	<LI>The system asks the handler to create a transfer object.</LI>
+	<LI>The system asks the transfer object for the type of data it is (flavor)</LI>
+	<LI>The system asks the transfer object its data</LI>
+	<LI>The system tells the handler that it is done exporting</LI>
+</UL>
+</P>
+
+<P>
+In terms of classes and methods, here is what happens:
+
+<UL>
+	<LI>TransferHandler.exportToClipboard(JComponent, Clipboard, &lt;TransferHandler.COPY&gt;) 	
+	<LI>TransferHandler.getSourceActions(JComponent)</LI>
+	<LI>TransferHandler.createTransferable</LI>
+	<LI>Transferable.getTransferDataFlavors()</LI>
+	<LI>Transferable.getTransferData(DataFlavor)</LI>
+	<LI>TransferHandler.exportDone(JComponent, Transferable, &lt;TransferHandler.COPY&gt;)</LI>
+</UL>
+
+
+<P>
+The system boils down to the following calls against the source object's 
+TransferHandler:
+<CODE>
+<PRE>
+ExportToClipboard{move}
+GetSourceActions
+CreateTransferable
+GetTransferDataFlavors{incore}
+GetTransferData
+
+// some period of time later ...
+
+ExportDone(source JComponent, TransferData from export, move action)
+ImportData
+</PRE>
+</CODE>
+</P>
+
+
+<H2>
+	<A name="TransferHandler state">
+		TransferHandler classes must have state
+	</A>
+</H2>
+This discussion only applies for classes of TransferHandler that support cut and/or
+drag-move.  If you only support copy/paste, then you do not need this.
+
+<P>
+Cut and Drag-move are supposed to remove their source data when the paste operation
+takes place.  The problem is that the Java framework calls ImportData <I>after</I>
+calling ExportDone.  Normally, one would expect to remove the data when ExportDone 
+is called, but if the operation does not result in a paste, then you end up removing
+the data without ever pasting it --- effectively deleting it.
+</P>
+
+<P>
+The solution is to remove the data <I>when the paste takes place</I> instead of when 
+ExportDone is called.  But for that to happen, the TransferHandler must "remember"
+if this is a copy or move.  The only way for that to happen is for it to remember
+if the data was exported via ExportToClipboard{move}, ExportToClipboard{copy}
+or ExportAsDrag.
+</P>
+
+<P>
+At the point that the data is pasted, the transferhandler can call copy or move 
+as appropriate.
+</P>
+
+<H2>
+	<A name="drag-move vs cut">
+		Drag-Move is distinguished from cut by the call to ExportAsDrag
+	</A>
+</H2>
+Unfortunately, the key distinction between clicking on some data to select it,
+moving to the destination and then dropping it and using cut is that one 
+approach uses ExportAsDrag, and the other uses ExportToClipboard{move}.
+
+<P>
+Therefore, the way to distinguish between the two operation is to remember which
+one of these approaches was used to initiate the operation.  This is another 
+reason why subclasses of TransferHandler require state.
+</P>
+
+<H2>
+	<A name="copy vs. cut">
+		Copy and Cut are distinguished by the params to ExportToCliboard
+	</A>
+</H2>
+Both copy/paste and cut/paste move use the same sequence of calls to implement
+their behavior
+
+
+
+
+
+<H2>cut/paste</H2>
+<CODE>
+<PRE>
+ExportToClipboard{move, 12:44:17}
+GetSourceActions
+CreateTransferable
+GetTransferDataFlavors{JVM-object}
+GetTransferData{JVM-object}
+ExportDone{move, 12:44:17}
+
+// The user moves to the new location, then triggers the paste
+
+ImportData{12:44:21, not a drop}
+</PRE>
+</CODE>
+
+
+
+<H2>copy/paste</H2>
+<CODE>
+<PRE>
+ExportToClipboard{copy, 12:55:15}
+GetSourceActions
+CreateTransferable
+GetTransferDataFlavors{JVM-object}
+GetTransferData{JVM-object}
+ExportDone{copy, 12:55:15}
+
+// The user moves to the new location then triggers the paste
+
+ImportData{12:55:17, not a drop}
+</PRE>
+</CODE>
+
+
+
+<H2>drag/move</H2>
+<CODE>
+<PRE>
+GetSourceActions
+GetSourceActions
+ExportAsDrag{move, 12:52:56}
+GetSourceActions
+CreateTransferable
+GetTransferDataFlavors{JVM-object}
+GetTransferDataFlavors{JVM-object}
+CanImport{JVM-object}
+
+// GetTransferDataFlavors/CanImport is repeated as the user moves the mouse around 
+// selects the new location for the data
+
+GetTransferDataFlavors{JVM-object}
+CanImport{JVM-object}
+ImportData{12:52:59, source drop action = copy-or-move, drop action = move, user drop action = move}
+ExportDone{move, 12:52:59}
+</PRE>
+</CODE>
+
+

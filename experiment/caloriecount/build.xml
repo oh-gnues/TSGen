@@ -31,6 +31,12 @@
 	
 	<property name="MAN" value="misc/MANIFEST.MF"/>
 	<property name="SRCJAR" value="${TEMP}/src/${JARFILE}"/>
+
+	<property name="test.src.dir" location="src/test/java"/>
+	<property name="test.classes.dir" location="temp/test-classes"/>
+	<property name="lib.dir" location="${basedir}/lib"/>
+
+	<property name="platform.jar" location="${lib.dir}/junit-platform-console-standalone-1.12.2.jar"/>
 	
 	
     <!-- ================================= 
@@ -41,7 +47,7 @@
     <target name="compile" depends="libraries">    	
     	<mkdir dir="${STAGING}"/>
     	
-    	<javac nowarn="on" destdir="${STAGING}">
+    	<javac srcdir="${SRC}" nowarn="on" destdir="${STAGING}" excludes="test/**" debud="true">
     		<compilerarg value="-nowarn"/>
     		<src path="src"/>
     		<src path="util"/>
@@ -89,7 +95,10 @@
 		</jar>
 	</target>
 	
-	<target name="jar">
+	<target name="jar" depends="compile">
+		<mkdir dir="${STAGING}"/>
+		<mkdir dir="${STAGING-DIST}"/>
+
 		<jar destfile="${STAGING-DIST}/${JARFILE}" manifest="${MAN}">
 			<fileset dir="${STAGING}"/>
 		</jar>
@@ -157,4 +166,53 @@
 	</target>
 	
 	<target name="redist" depends="clean, dist"/>
+
+		<target name="compile-tests" depends="jar">
+		<mkdir dir="${test.classes.dir}" />
+		<javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" includeantruntime="false" debug="true">
+			<classpath>
+				
+				<pathelement location="temp/dist/caloriecount.jar" />
+				
+				<pathelement location="${platform.jar}" />
+				<fileset dir="${lib.dir}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="test" depends="compile-tests">
+		<mkdir dir="test-reports" />
+		<java jar="${platform.jar}" fork="true" failonerror="false" resultproperty="junit.platform.exitcode">
+			
+			<arg value="--classpath" />
+			<arg path="${test.classes.dir}:temp/dist/caloriecount.jar:${lib.dir}/evosuite-standalone-runtime-1.2.0.jar" />
+			
+			<arg value="--scan-classpath" />
+			
+			<arg value="--reports-dir=test-reports" />
+			
+			<arg value="--details=tree" />
+		</java>
+
+		<mkdir dir="build/test-results" />
+
+		<junit printsummary="yes" haltonfailure="no" fork="yes">
+
+			<classpath>
+				<pathelement path="temp/staging" />
+				<fileset dir="lib"><include name="**/*.jar" /></fileset>
+			</classpath>
+
+			<formatter type="xml" />
+			<batchtest todir="build/test-results">
+				<fileset dir="src/test/java">
+					<include name="**/*Test*.java" />
+					<include name="**/*ESTest.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
 </project>

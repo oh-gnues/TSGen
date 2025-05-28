@@ -47,7 +47,7 @@
     <target name="compile" depends="libraries">    	
     	<mkdir dir="${STAGING}"/>
     	
-    	<javac srcdir="${SRC}" nowarn="on" destdir="${STAGING}" excludes="test/**" debud="true">
+    	<javac srcdir="${SRC}" nowarn="on" destdir="${STAGING}" excludes="test/**" debug="true">
     		<compilerarg value="-nowarn"/>
     		<src path="src"/>
     		<src path="util"/>

@@ -44,3 +44,9 @@ logs/
 *.tmp
 *.temp
 .cache/
+
+# Experiment directories
+experiment/caloriecount/*
+
+# Python specific
+tallon/__pycache__/

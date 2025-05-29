@@ -18,7 +18,7 @@ class ProjectConfig:
     tsdetect_jar: Path = field(default_factory=lambda: Path("tools/TestSmellDetector.jar"))
 
     # LLM
-    openai_model: str = "gpt-4.1"
+    openai_model: str = "o3"
     temperature: float = 0.2
 
     # pipeline limits

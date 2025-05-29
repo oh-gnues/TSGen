@@ -63,7 +63,7 @@ Apply **every checklist item** that is relevant while preserving functional beha
 {SMELL_GUIDE}
 
 **Output rules**
-Return ONLY the final Java source code – no explanation, comments, or markdown fences.
+Return ONLY the final Java source code – no explanation, comments, or markdown fences. Output strictly valid Java source *only*.
 [/INST]"""
 
 ZEROSHOT_PROMPT = """<s>[INST]
@@ -72,6 +72,24 @@ ZEROSHOT_PROMPT = """<s>[INST]
 ```
 
 Remove the test smells from this Java test code and write refactored Java test code that compiles, exception handling and tests exactly the same as the existing code. Return ONLY the final Java source code – no explanation, comments, or markdown fences.
+
+[/INST]
+"""
+
+COMPILE_ERROR_PROMPT = """<s>[INST]
+The following Java test code failed to compile with these errors:
+
+```
+{COMPILE_ERRORS}
+```
+
+Here is the current test code:
+
+```java
+{TEST_SOURCE}
+```
+
+Fix the compilation errors while preserving the test functionality. Return ONLY the corrected Java source code – no explanation, comments, or markdown fences.
 
 [/INST]
 """
@@ -232,3 +250,45 @@ def refactor_tests_zeroshot(cfg: ProjectConfig, archive_dir: Path | None = None)
             shutil.copy2(out_path, archive_path)
             
         print(f"[LLM] saved → {out_path}")
+
+def fix_compile_errors(cfg: ProjectConfig, compile_errors: str, archive_dir: Path | None = None) -> None:
+    """
+    Fix compilation errors by sending error logs to LLM for correction.
+    """
+    for src_file in cfg.generated_test_dir.rglob("*.java"):
+        if "scaffolding" in src_file.name.lower():
+            continue
+        
+        # Check if this file is mentioned in the compile errors
+        if src_file.name not in compile_errors:
+            continue
+            
+        print(f"[LLM] fixing compile errors in {src_file.name}...")
+        
+        prompt = COMPILE_ERROR_PROMPT.format(
+            COMPILE_ERRORS=compile_errors,
+            TEST_SOURCE=src_file.read_text(encoding="utf-8")
+        )
+        
+        resp = openai.chat.completions.create(
+            model=cfg.openai_model,
+            messages=[{"role":"system","content":SYSTEM_PROMPT},
+                      {"role":"user","content":prompt}],
+            max_completion_tokens=8192,
+        )
+        improved = resp.choices[0].message.content.strip()
+
+        # Preserve original sub‑package folder when saving
+        rel_path = src_file.relative_to(cfg.generated_test_dir)
+        out_path = cfg.refactored_test_dir / rel_path
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        out_path.write_text(improved, encoding="utf-8")
+        
+        # ----- archive per-round -----
+        if archive_dir is not None:
+            archive_path = archive_dir / rel_path
+            archive_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(out_path, archive_path)
+            
+        print(f"[LLM] saved fixed code → {out_path}")

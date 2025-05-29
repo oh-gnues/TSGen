@@ -3,6 +3,7 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 import os
+from typing import Tuple, Optional
 
 from .config import ProjectConfig
 from .utils import run_cmd, CommandError
@@ -28,8 +29,10 @@ def _copy_refactored_tests(cfg: ProjectConfig) -> None:
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
 
-def compile_and_test(cfg: ProjectConfig) -> bool:
-    """clean → compile/test, return True if success"""
+def compile_and_test(cfg: ProjectConfig) -> Tuple[bool, Optional[str]]:
+    """
+    clean → compile/test, return (success, error_output)
+    """
     _copy_refactored_tests(cfg)
     tool = _detect_build_tool(cfg.project_dir)
 
@@ -43,7 +46,7 @@ def compile_and_test(cfg: ProjectConfig) -> bool:
     try:
         run_cmd(cmd, cwd=cfg.project_dir)
         print(f"[Compile] {tool} build OK")
-        return True
+        return True, None
     except CommandError as e:
         print(f"[Compile] {tool} build FAILED\n", e)
-        return False
+        return False, str(e)

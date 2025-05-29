@@ -6,7 +6,7 @@ from typing import List, Dict
 from .config import ProjectConfig
 from .evo import generate_tests
 from .tsdetect import run_tsdetect, smell_counts_from_csv, get_test_methods_count
-from .llm_refactor import refactor_tests, refactor_tests_zeroshot
+from .llm_refactor import refactor_tests, refactor_tests_zeroshot, fix_compile_errors
 from .compiler import compile_and_test
 
 # ── utility: pretty‑print smell summary ──────────────────────────────────
@@ -91,14 +91,27 @@ def run_pipeline(project_name: str,
         #TODO: Archive zero-shot refactor
         refactor_tests_zeroshot(cfg, archive_dir=round_dir)
 
-        # 4) compile + test
+        # 4) compile + test with error fixing
+        compile_success = False
         for attempt in range(1, cfg.max_compile_retries + 1):
             print(f"[Compile] Attempt {attempt}")
-            if compile_and_test(cfg):
+            success, error_output = compile_and_test(cfg)
+            
+            if success:
+                compile_success = True
                 break
-            time.sleep(2)
-        else:
-            print("[Pipeline] Compile failed; abort.")
+            elif error_output and attempt < cfg.max_compile_retries:
+                # Try to fix compile errors with LLM
+                print(f"[Pipeline] Compile failed, asking LLM to fix errors...")
+                error_fix_dir = cfg.result_dir / f"error_fix_round_{round_}_attempt_{attempt}"
+                fix_compile_errors(cfg, error_output, archive_dir=error_fix_dir)
+                time.sleep(2)
+            else:
+                print(f"[Pipeline] Compile attempt {attempt} failed")
+                time.sleep(2)
+        
+        if not compile_success:
+            print("[Pipeline] All compile attempts failed; abort.")
             return
 
         # 5) re-detect smells
@@ -113,7 +126,7 @@ def run_pipeline(project_name: str,
 # ── CLI ─────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Tallon test-smell pipeline")
+    parser = argparse.ArgumentParser(description="TSGen test-smell pipeline")
     parser.add_argument("project", help="Project dir name under experiment/")
     parser.add_argument(
         "-c", "--class", dest="classes", action="append",

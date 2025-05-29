@@ -6,7 +6,7 @@ from typing import List, Dict
 from .config import ProjectConfig
 from .evo import generate_tests
 from .tsdetect import run_tsdetect, smell_counts_from_csv, get_test_methods_count
-from .llm_refactor import refactor_tests
+from .llm_refactor import refactor_tests, refactor_tests_zeroshot
 from .compiler import compile_and_test
 
 # ── utility: pretty‑print smell summary ──────────────────────────────────
@@ -86,7 +86,10 @@ def run_pipeline(project_name: str,
         round_dir = cfg.result_dir / f"refactor_round_{round_}"
         if round_dir.exists():
             shutil.rmtree(round_dir)
-        refactor_tests(cfg, llm_smell_map, archive_dir=round_dir)
+        # refactor_tests(cfg, llm_smell_map, archive_dir=round_dir)
+        
+        #TODO: Archive zero-shot refactor
+        refactor_tests_zeroshot(cfg, archive_dir=round_dir)
 
         # 4) compile + test
         for attempt in range(1, cfg.max_compile_retries + 1):

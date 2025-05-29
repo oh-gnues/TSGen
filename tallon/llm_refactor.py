@@ -66,6 +66,16 @@ Apply **every checklist item** that is relevant while preserving functional beha
 Return ONLY the final Java source code – no explanation, comments, or markdown fences.
 [/INST]"""
 
+ZEROSHOT_PROMPT = """<s>[INST]
+```java
+{TEST_SOURCE}
+```
+
+Remove the test smells from this Java test code and write refactored Java test code that compiles, exception handling and tests exactly the same as the existing code. Return ONLY the final Java source code – no explanation, comments, or markdown fences.
+
+[/INST]
+"""
+
 def _load_guide(cfg: ProjectConfig) -> str:
     """
     Concatenate all `<smell>.md` files in `cfg.smell_guides_dir` into a single
@@ -177,6 +187,44 @@ def refactor_tests(cfg: ProjectConfig, smell_map: Dict[str, List[str]], archive_
         out_path.parent.mkdir(parents=True, exist_ok=True)
 
         out_path.write_text(improved, encoding="utf-8")
+        # ----- archive per-round -----
+        if archive_dir is not None:
+            archive_path = archive_dir / rel_path
+            archive_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(out_path, archive_path)
+            
+        print(f"[LLM] saved → {out_path}")
+        
+def refactor_tests_zeroshot(cfg: ProjectConfig, archive_dir: Path | None = None) -> None:
+    """
+    Zero-shot refactoring without smell detection or guides.
+    Simply asks the LLM to remove test smells and refactor the code.
+    """
+    for src_file in cfg.generated_test_dir.rglob("*.java"):
+        if "scaffolding" in src_file.name.lower():
+            continue
+        print(f"[LLM] zero-shot refactoring {src_file.name}...")
+        
+        prompt = ZEROSHOT_PROMPT.format(
+            TEST_SOURCE=src_file.read_text(encoding="utf-8")
+        )
+        
+        resp = openai.chat.completions.create(
+            model=cfg.openai_model,
+            messages=[{"role":"system","content":SYSTEM_PROMPT},
+                      {"role":"user","content":prompt}],
+            # temperature=0.1, max_tokens=8192,
+            max_completion_tokens=8192,
+        )
+        improved = resp.choices[0].message.content.strip()
+
+        # Preserve original sub‑package folder when saving
+        rel_path = src_file.relative_to(cfg.generated_test_dir)
+        out_path = cfg.refactored_test_dir / rel_path
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        out_path.write_text(improved, encoding="utf-8")
+        
         # ----- archive per-round -----
         if archive_dir is not None:
             archive_path = archive_dir / rel_path

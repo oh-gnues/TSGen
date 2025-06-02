@@ -1,0 +1,10 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Kim"
+  given-names: "Seungho"
+  orcid: "https://orcid.org/0009-0006-6048-5347"
+title: "TSgen"
+version: 1.0.0
+date-released: 2025-05-31
+url: "https://github.com/oh-gnues/TSGen"
